@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Damage Detection Pipeline</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=REDACTED&libraries=places"></script>
+    <style>
+        /* Additional styling specific to this page */
+        .upload-container {
+            max-width: 1000px;
+            margin: 120px auto 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .upload-container form {
+            margin-bottom: 40px;
+        }
+
+        .upload-container form div {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .upload-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .upload-container input[type="text"],
+        .upload-container input[type="number"],
+        .upload-container input[type="file"] {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .upload-container button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .upload-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .image-preview {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .image-container {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            max-height: 360px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .map-container {
+            margin-top: 30px;
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+
+        #map {
+            height: 240px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        #location-form {
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .location-info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .location-info p span {
+            font-weight: bold;
+        }
+
+        .confirm-button {
+            display: block;
+            margin-top: 15px;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .confirm-button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        var userRole = "{{ user.role if user else 'guest' }}";
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            document.getElementById('latitude-display').textContent = lat;
+            document.getElementById('longitude-display').textContent = lng;
+            initMap(lat, lng);
+            reverseGeocode(lat, lng);
+        }
+
+        function showError(error) {
+            alert("Error in getting location: " + error.message);
+        }
+
+        function initMap(lat, lng) {
+            var location = {lat: lat, lng: lng};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: true
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function() {
+                var position = marker.getPosition();
+                document.getElementById('latitude').value = position.lat();
+                document.getElementById('longitude').value = position.lng();
+                reverseGeocode(position.lat(), position.lng());
+            });
+        }
+
+        function reverseGeocode(lat, lng) {
+            var geocoder = new google.maps.Geocoder();
+            var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+            geocoder.geocode({'location': latlng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        var address = results[0].formatted_address;
+                        document.getElementById('address-display').textContent = address;
+                        document.getElementById('address').value = address;
+                        document.getElementById('location-form').style.display = 'block';
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        function requestRepair() {
+            if (userRole !== 'user') {
+                alert("Please log in as a customer to request repair services.");
+                return false;
+            }
+            document.getElementById('repair-form').submit();
+        }
+    </script>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var messages = {{ messages | tojson }};
+                    messages.forEach(function(msg) {
+                        alert(msg[1]);
+                    });
+                });
+            </script>
+        {% endif %}
+    {% endwith %}
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                {% if user %}
+                    <li><a href="{{ url_for('user_dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <div class="upload-container">
+        <h1>Car Damage Detection Pipeline</h1>
+
+        {% if not step or step == 'initial' %}
+        <!-- Form for car details -->
+        <form id="car-details-form" action="/fetch-car-price" method="post">
+            <div>
+                <label for="car_model">Enter Car Model:</label>
+                <input type="text" id="car_model" name="car_model" value="{{ car_model or '' }}" required>
+            </div>
+            <div>
+                <label for="car_year">Enter Manufacturing Year as per VIN:</label>
+                <input type="number" id="car_year" name="car_year" value="{{ car_year or '' }}" required>
+            </div>
+            <button type="submit">Step 1: Fetch Car Price</button>
+        </form>
+        {% endif %}
+
+        {% if step == 'price_fetched' %}
+        <!-- Display fetched car price -->
+        <div>
+            <label for="car_price">Estimated Car $Price (If you think price is wrong manually update it):</label>
+            <input type="text" id="car_price" name="car_price" value="{{ car_price }}" required>
+        </div>
+        
+        <!-- Form for image upload and damage check -->
+        <form id="damage-check-form" action="/check-car-damages" method="post" enctype="multipart/form-data">
+            <input id="file-input" type="file" name="file" accept="image/jpeg" required>
+            <!-- Hidden fields for car details -->
+            <input type="hidden" name="car_price" value="{{ car_price }}">
+            <input type="hidden" name="car_year" value="{{ car_year }}">
+            <input type="hidden" name="car_model" value="{{ car_model }}">
+            <button type="submit">Step 2: Please Upload Image of Damaged Car (Note: Please take image of car from either left/ right/ front/ back angle from where car is completely visible)</button>
+            <!-- <p>Debug Info in damage check form: Car Price = {{ car_price }}, Car Year = {{ car_year }}, Car Model = {{ car_model }}</p -->
+        </form>
+		<script>
+			// Update the hidden car_price input whenever the user changes the car_price_display field
+			document.getElementById('car_price').addEventListener('input', function() {
+				document.getElementById('car_price_hidden').value = this.value;
+			});
+		</script>
+        {% endif %}
+
+        {% if step == 'confirm' %}
+        <!-- Confirmation and re-upload forms -->
+        <!-- <p>Debug Info in step confirm: Car Price = {{ car_price }}, Car Year = {{ car_year }}, Car Model = {{ car_model }}</p> -->
+        <div class="image-preview">
+            <div class="image-container">
+                <h2>Original Image</h2>
+                <img src="{{ url_for('static', filename=orig_image) }}" alt="Original Image">
+            </div>
+            <div class="image-container">
+                <h2>Detected Car Object</h2>
+                <img src="{{ url_for('static', filename=cropped_image) }}" alt="Car Object">
+            </div>
+        </div>
+        <form id="reupload-form" action="/check-car-damages" method="post" enctype="multipart/form-data">
+            <p>If you think car is not properly detected please re-upload image from different distance avoiding obstructions:</p>
+            <input id="file-input" type="file" name="file" accept="image/jpeg" required>
+            <input type="hidden" name="car_price" value="{{ car_price }}">
+            <input type="hidden" name="car_year" value="{{ car_year }}">
+            <input type="hidden" name="car_model" value="{{ car_model }}">
+            <button type="submit">Re-Upload Image</button>
+        </form>
+        <form id="confirmation-form" action="/run-damage-inference" method="post">
+            <!-- <p>Debug Info in confirmation-form: Car Price = {{ car_price }}, Car Year = {{ car_year }}, Car Model = {{ car_model }}</p> -->
+            <input type="hidden" name="orig_image_path" value="{{ orig_image }}">
+            <input type="hidden" name="cropped_image_path" value="{{ cropped_image }}">
+            <input type="hidden" name="car_price" value="{{ car_price }}">
+            <input type="hidden" name="car_year" value="{{ car_year }}">
+            <input type="hidden" name="car_model" value="{{ car_model }}">
+            <button type="submit" class="confirm-button">Step 3: Confirm and Run Damage Inference</button>
+        </form>
+        {% endif %}
+
+        {% if step == 'result' %}
+        <!-- Display inference results -->
+        <div class="image-preview">
+            <div class="image-container">
+                <h2>Original Image</h2>
+                <img src="{{ url_for('static', filename=orig_image) }}" alt="Original Image">
+            </div>
+            <div class="image-container">
+                <h2>Identified Car Object</h2>
+                <img src="{{ url_for('static', filename=cropped_image) }}" alt="Car Object">
+            </div>
+            <div class="image-container">
+                <h2>Damaged Areas</h2>
+                <img src="{{ url_for('static', filename=inf_image) }}" alt="Inference Image">
+            </div>
+        </div>
+        <div class="result-summary">
+            <p>Total Repair Cost: ${{ repair_cost }}</p>
+            <form action="/detailed-analysis" method="post" target="_blank">
+                <input type="hidden" name="repair_cost" value="{{ repair_cost }}">
+                <input type="hidden" name="damage_info" value="{{ damage_info }}">
+                <input type="hidden" name="chosen_damages" value="{{ chosen_damages }}">
+                <button type="submit" class="confirm-button">Get Detailed Analysis</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if step == 'result' %}
+        <div class="map-container">
+            <button onclick="getLocation()">Get your Location for Repair Services</button>
+            <div id="map"></div>
+            <div id="location-form" class="location-info">
+                <p>Latitude: <span id="latitude-display"></span></p>
+                <p>Longitude: <span id="longitude-display"></span></p>
+                <p>Address: <span id="address-display"></span></p>
+                <form id="repair-form" action="{{ url_for('request_repair') }}" method="post">
+                    <input type="hidden" name="prediction_path" value="{{ inf_image }}">
+                    <input type="hidden" name="original_path" value="{{ orig_image }}">
+                    <input type="hidden" name="latitude" id="latitude" value="">
+                    <input type="hidden" name="longitude" id="longitude" value="">
+                    <input type="hidden" id="user-timezone" name="timezone" value="">
+                    <input type="hidden" id="address" name="address" value="">
+                    <button type="button" class="confirm-button" onclick="requestRepair()">Confirm Location and Request Repair Services from nearest Agent</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Order Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        #agent-map {
+            height: 200px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=REDACTED"></script>
+    <script>
+        function initMap() {
+            var location = {lat: {{ order.latitude }}, lng: {{ order.longitude }}};
+            var map = new google.maps.Map(document.getElementById('agent-map'), {
+                zoom: 15,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: true
+            });
+            google.maps.event.addListener(marker, 'dragend', function() {
+                var position = marker.getPosition();
+                console.log("New position: " + position.lat() + ", " + position.lng());
+            });
+        }
+    </script>
+</head>
+<body onload="initMap()">
+    <header class="agent-order-header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('agent_dashboard') }}">Back to Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="agent-order-details-container">
+        <h1>Order Details</h1>
+        <p><strong>Request ID:</strong> {{ order.id }}</p>
+        <p><strong>User ID:</strong> {{ order.user_id }}</p>
+		<p><strong>Vehicle details:</strong> {{ car_model }}</p>
+		<p><strong>Damage Identified:</strong></p>
+		<ul>
+			{% for damage_type, damages in damage_details.items() %}
+				{% if damages %}
+				<li><strong>{{ damage_type.replace('_', ' ').title() }}:</strong> {{ damages | length }}</li>
+				{% else %}
+				<li><strong>{{ damage_type.replace('_', ' ').title() }}:</strong> 0</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+        <p><strong>Created At:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        <p><strong>Address:</strong> {{ order.address }}</p>
+        <p><strong>Customer Phone:</strong> {{ customer_phone }}</p>
+        <p><strong>Customer Email:</strong> {{ customer_email }}</p>
+        <div class="agent-order-images">
+            <img src="{{ url_for('static', filename=original_path) }}" alt="Original Image" class="agent-order-image">
+            <img src="{{ url_for('static', filename=prediction_path) }}" alt="Inference Result" class="agent-order-image">
+        </div>
+
+        <!-- Map and location details only shown if the order is not completed -->
+        {% if order.status != 'Completed' %}
+            <div id="agent-map"></div>
+        {% endif %}
+
+        <!-- Conditional rendering based on order status -->
+        <div class="agent-action-buttons">
+            {% if order.status == 'assigned' %}
+            <form action="{{ url_for('accept_order', order_id=order.id) }}" method="post">
+                <button type="submit" class="agent-action-button accept">Accept</button>
+            </form>
+            <form action="{{ url_for('decline_order', order_id=order.id) }}" method="post">
+                <button type="submit" class="agent-action-button decline">Decline</button>
+            </form>
+            {% elif order.status == 'accepted' %}
+            <form action="{{ url_for('mark_finished', order_id=order.id) }}" method="post">
+                <button type="submit" class="agent-action-button finished">Mark Finished and Request Payment</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
