@@ -228,7 +228,13 @@
 				<li><a href="{{ url_for('chatbot_index') }}">Access carBot</a></li>
                 <li><a href="/">Home</a></li>
                 {% if user %}
-                    <li><a href="{{ url_for('user_dashboard') }}">Dashboard</a></li>
+					{% if user.role == 'user' %}
+						<li><a href="{{ url_for('user_dashboard') }}">Dashboard</a></li>
+					{% elif user.role == 'agent' %}
+						<li><a href="{{ url_for('agent_dashboard') }}">Dashboard</a></li>
+					{% elif user.role == 'admin' %}
+						<li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+					{% endif %}
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>
