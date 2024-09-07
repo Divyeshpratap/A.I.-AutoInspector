@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('agent_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <h1>Welcome to the Agent Dashboard</h1>
+        <p>Below are the requests assigned to you:</p>
+
+        <div class="orders-section">
+            {% if orders %}
+                {% for order in orders %}
+                <div class="order-box">
+                    <p><strong>Request ID:</strong> {{ order.id }}</p>
+                    <p><strong>Hours Since Created:</strong> {{ order.hours_since_created }}</p>
+                    <p><strong>Vehicle details:</strong> {{ car_model }}</p>
+                    {% if order.image_path %}
+                        <img src="{{ url_for('static', filename=order.image_path) }}" alt="Request Image" class="order-image">
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
+                    <p><strong>Status:</strong> {{ order.status }}</p>
+                    <a href="{{ url_for('view_order_details', order_id=order.id) }}" class="details-link">View Details</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No requests assigned yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

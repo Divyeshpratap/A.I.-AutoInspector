@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Order Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="user-order-header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('user_dashboard') }}">Dashboard</a></li>
+				<li><a href="{{ url_for('chatbot_index') }}">Access carBot</a></li>
+				<li><a href="{{ url_for('check_car_damages') }}">Check Car Damages</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="user-order-details-container">
+        <h1>Order Details</h1>
+        <div class="user-order-images">
+            <img src="{{ url_for('static', filename=original_path) }}" alt="Original Image" class="user-order-image">
+            <img src="{{ url_for('static', filename=prediction_path) }}" alt="Inference Result" class="user-order-image">
+        </div>
+        <div class="user-order-info">
+            <p><strong>Date of Inference:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            <p><strong>Assigned Agent:</strong> {{ agent_username }}</p>
+            <p><strong>Agent Phone:</strong> {{ agent_phone }}</p>
+            <p><strong>Agent Email:</strong> {{ agent_email }}</p>
+			<h3>Repair Cost Breakdown</h3>
+			<p>Total Repair Cost: ${{ repair_cost }}</p>
+		    <ul>
+			{% for damage in chosen_damages %}
+				<li>{{ damage['damage_type'].capitalize() }}
+				, Cost: ${{ damage['cost'] }}</li>
+			{% endfor %}
+			</ul>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+            {% if order.status == 'PaymentRequested' %}
+            <form action="{{ url_for('complete_payment', order_id=order.id) }}" method="post">
+                <button type="submit" class="user-payment-button">Proceed with Payment</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

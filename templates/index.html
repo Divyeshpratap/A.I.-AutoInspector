@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.I. Automobile Inspector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Additional styling for the home page */
+        .home-container {
+            max-width: 1200px;
+            margin: 150px auto 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .home-container h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 36px;
+        }
+
+        .home-container p {
+            margin-bottom: 30px;
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .home-container a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .home-container a:hover {
+            background-color: #0056b3;
+        }
+
+        .services-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .services-section article {
+            max-width: 300px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .services-section h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .services-section p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Automobile Inspector Logo">
+        </div>
+        <nav>
+            <ul>
+                {% if user %}
+                    <li>You are logged in as: {{ user.username }} ({{ user.role }})</li>
+					{% if user.role == 'user' %}
+						<li><a href="{{ url_for('user_dashboard') }}">Dashboard</a></li>
+					{% elif user.role == 'agent' %}
+						<li><a href="{{ url_for('agent_dashboard') }}">Dashboard</a></li>
+					{% elif user.role == 'admin' %}
+						<li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+					{% endif %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li>You are logged in as Guest. Please sign in.</li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main class="home-container">
+        <h1>Welcome to A.I. Automobile Inspector</h1>
+		<h2>Comprehensive Car Care at Your Fingertips</h2>
+        <p>Worried about your car's condition? We've got you covered. Our advanced AI-powered tool provides a seamless car care experience—from assessing visual damages and estimating repair costs to connecting you with the nearest service centers. And with our intelligent carBot, you get instant answers to all your car-related questions.</p>
+        <p>
+            <a href="{{ url_for('check_car_damages') }}">Check Car Damages</a>
+			<a href="{{ url_for('chatbot_index') }}">Access Car Manual Chatbot</a>
+        </p>
+		<div class="inference-container">
+            <img src="{{ url_for('static', filename='images/inferenceSample.png') }}" alt="A.I. Logo">
+        </div>
+        <section class="services-section">
+			<article>
+                <h3>carBot</h3>
+                <p>Say goodbye to the hassle of searching through your car manual. Our carBot provides instant, accurate answers to all your car-related queries, using the information from your car's manual.</p>
+            </article>
+            <article>
+                <h3>Damage Assessment</h3>
+                <p>Get a precise diagnosis of your car's visual damages by simply uploading a photo. Our AI does the rest.</p>
+            </article>
+            <article>
+                <h3>Repair Cost Estimation</h3>
+                <p>Receive a detailed breakdown of repair costs, including an estimate of the total expense, so you know exactly what to expect.</p>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 A.I. Automobile Inspector. All rights reserved.</p>
+    </footer>
+</body>
+</html>

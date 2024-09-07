@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('user_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('check_car_damages') }}">Check Car Damages</a></li>
+				<li><a href="{{ url_for('chatbot_index') }}">Access carBot</a></li>
+				<li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <h1>Welcome to Your Dashboard, {{ user.username }}</h1>
+
+        <div class="inferences-section">
+            {% if inferences %}
+                {% for inference in inferences %}
+                <div class="inference-item">
+                    <div class="inference-details">
+                        <p><strong>Order ID:</strong> {{ inference.order.id }}</p>
+                        <p><strong>Date of Inference:</strong> {{ inference.order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                        <p><strong>Status:</strong> {{ inference.order.status }}</p>
+                        <p><strong>Agent:</strong> {{ inference.agent_username }}</p>
+                        <a href="{{ url_for('user_order_details', order_id=inference.order.id) }}" class="details-link">View Details</a>
+                    </div>
+                    <div class="inference-image">
+                        <img src="{{ url_for('static', filename=inference.prediction_path) }}" alt="Inference Result">
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p>No inferences found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+Flask==3.0.3
+Flask-SocketIO==5.3.6
+Flask-SQLAlchemy==3.1.1
+Werkzeug==3.0.3
+SQLAlchemy==2.0.31
+requests==2.32.3
+Pillow==9.4.0
+numpy==1.24.4
+faiss-cpu==1.8.0.post1
+langchain==0.2.15
+langchain-community==0.2.13
+langchain-core==0.2.35
+langchain-openai==0.1.23
+transformers==4.44.2
+opencv-python==4.10.0.84
+matplotlib==3.7.5
+yapf==0.40.1

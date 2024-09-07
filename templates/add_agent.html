@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Agent</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Add New Agent</h2>
+        <form action="{{ url_for('add_agent') }}" method="post">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="shop">Shop:</label>
+                <input type="text" class="form-control" id="shop" name="shop" required>
+            </div>
+            <div class="form-group">
+                <label for="latitude">Agent shop latitude:</label>
+                <input type="number" class="form-control" id="latitude" name="latitude" step="any"required>
+            </div>
+            <div class="form-group">
+                <label for="longitude">Agent shop longitude:</label>
+                <input type="number" class="form-control" id="longitude" name="longitude" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="number" class="form-control" id="phone" name="phone" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Agent</button>
+        </form>
+    </div>
+</body>
+</html>

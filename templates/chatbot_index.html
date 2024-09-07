@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Manual Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Additional styling specific to the chatbot page */
+        .chatbot-container {
+            max-width: 800px;
+            margin: 120px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbot-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .chatbot-container .header-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .chatbot-container .header-buttons button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .chatbot-container .header-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .chat-window {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-window p {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            line-height: 1.4;
+        }
+
+        .chat-window .human {
+            background-color: #007bff;
+            color: #ffffff;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .chat-window .assistant {
+            background-color: #f8f9fa;
+            color: #333;
+            align-self: flex-start;
+            text-align: left;
+        }
+
+        .chat-input {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-input input,
+        .chat-input textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .chat-input button {
+            align-self: flex-end;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .chat-input button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+				<li><a href="{{ url_for('check_car_damages') }}">Check Car Damages</a><li>
+                {% if user %}
+					{% if user.role == 'user' %}
+						<li><a href="{{ url_for('user_dashboard') }}">Dashboard</a></li>
+					{% elif user.role == 'agent' %}
+						<li><a href="{{ url_for('agent_dashboard') }}">Dashboard</a></li>
+					{% elif user.role == 'admin' %}
+						<li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+					{% endif %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <div class="chatbot-container">
+        <h1>Car Manual Chatbot</h1>
+        <div class="header-buttons">
+            <button id="new-chat">New Chat</button>
+            <button id="delete-chat">Refresh Chat</button>
+        </div>
+		<p>Conversation History</p>
+        <div class="chat-window">
+            <div id="chat-history">
+                <!-- Chat messages will be appended here -->
+            </div>
+        </div>
+		<p>Please upload you car manual or any relevant web links which our carBot can leverage to answer your queries.</p>
+        <div class="chat-input">
+            <form id="upload-form" action="{{ url_for('chatbot_upload') }}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="pdf_file" id="pdf_file" placeholder="Upload Car Manual (PDF)">
+                <input type="text" name="links" id="links" placeholder="Enter relevant links (comma-separated)">
+                <textarea name="question" id="question" placeholder="Ask a question about your car..."></textarea>
+                <button type="submit">Ask...</button>
+				<p class="subtle-note">*First time processing of large manuals may take one or two minutes.</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('new-chat').onclick = function() {
+            fetch('/new_chat', {method: 'POST'})
+                .then(response => window.open(window.location.href, '_blank'));
+        };
+
+        document.getElementById('delete-chat').onclick = function() {
+            fetch('/delete_chat', {method: 'POST'})
+                .then(response => location.reload());
+        };
+
+        // Handle form submission and prevent page reload
+        document.getElementById('upload-form').onsubmit = function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatHistory = document.getElementById('chat-history');
+                
+                const userMessage = document.createElement('p');
+                userMessage.classList.add('human');
+                userMessage.innerText = formData.get('question');
+                chatHistory.appendChild(userMessage);
+
+                const botMessage = document.createElement('p');
+                botMessage.classList.add('assistant');
+                botMessage.innerText = data.answer;
+                chatHistory.appendChild(botMessage);
+
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+                document.getElementById('question').value = '';
+            })
+            .catch(error => console.error('Error:', error));
+        };
+    </script>
+</body>
+</html>

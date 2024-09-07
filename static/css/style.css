@@ -1,0 +1,1206 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo-container img {
+    max-height: 50px;
+    width: auto;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Register Container Styles */
+.register-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.register-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.register-container form input,
+.register-container form select,
+.register-container form button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.register-container form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-container form button:hover {
+    background-color: #0056b3;
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Login Container Styles */
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.login-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login-container form input,
+.login-container form select,
+.login-container form button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.login-container form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-container form button:hover {
+    background-color: #0056b3;
+}
+
+.login-container p {
+    margin-top: 15px;
+}
+
+.login-container p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-container p a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 100px auto 20px auto; /* Adjusted margin to account for the fixed header */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.dashboard-container h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Inference Section */
+.inferences-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inference-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.inference-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.inference-details {
+    max-width: 60%;
+}
+
+.inference-details p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.details-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.details-link:hover {
+    text-decoration: underline;
+}
+
+.inference-image {
+    max-width: 35%;
+}
+
+.inference-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+    .register-container,
+    .login-container {
+        width: 90%;
+        padding: 15px;
+    }
+    .inference-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .inference-image {
+        max-width: 100%;
+        margin-top: 15px;
+    }
+    .inference-details {
+        max-width: 100%;
+    }
+}
+
+
+
+/* User Profile Container */
+.user-profile-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.user-profile-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.user-profile-container form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.user-profile-container form input,
+.user-profile-container form button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.user-profile-container form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.user-profile-container form button:hover {
+    background-color: #0056b3;
+}
+
+/* Orders Section */
+.orders-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+}
+
+.order-box:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.order-image {
+    max-width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-left: 20px;
+    border: 1px solid #ddd;
+}
+
+.details-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.details-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .order-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-image {
+        margin: 10px 0;
+    }
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.profile-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+
+/* General body styling */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+}
+
+header img {
+    height: 50px; /* Adjust the size of the logo as needed */
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    padding: 0 10px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+
+
+
+/* Agent Profile Container */
+.agent-profile-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.agent-profile-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* Horizontal Containers within Agent Profile */
+.agent-profile-container .horizontal-containers {
+    display: flex;
+    gap: 20px;
+}
+
+.agent-profile-container .profile-form,
+.agent-profile-container .location-form {
+    width: 48%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.agent-profile-container .profile-form div,
+.agent-profile-container .location-form div {
+    margin-bottom: 15px;
+}
+
+.agent-profile-container .profile-form label,
+.agent-profile-container .location-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.agent-profile-container .profile-form input,
+.agent-profile-container .location-form input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.agent-profile-container .btn-update {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.agent-profile-container .btn-update:hover {
+    background-color: #0056b3;
+}
+
+/* Map Container in Agent Profile */
+#map {
+    height: 300px;
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Responsive Design for Agent Profile */
+@media (max-width: 1024px) {
+    .agent-profile-container .horizontal-containers {
+        flex-direction: column;
+    }
+
+    .agent-profile-container .profile-form,
+    .agent-profile-container .location-form {
+        width: 100%;
+    }
+}
+
+
+/* User Order Header */
+.user-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.user-order-header .logo-container img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* User Order Details Container */
+.user-order-details-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-order-details-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* User Order Images */
+.user-order-images {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.user-order-image {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* User Order Info */
+.user-order-info p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Payment Button */
+.user-payment-button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.user-payment-button:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .user-order-images {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-order-image {
+        max-width: 100%;
+    }
+}
+
+
+/* Agent Order Header */
+.agent-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.agent-order-header .logo-container img {
+    max-height: 50px;
+    width: auto;
+}
+/* Agent Order Header */
+.agent-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.agent-order-header .logo-container img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* Agent Order Details Container */
+.agent-order-details-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.agent-order-details-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* Agent Order Images */
+.agent-order-images {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.agent-order-image {
+    max-width: 45%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Agent Action Buttons */
+.agent-action-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.agent-action-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.agent-action-button.accept {
+    background-color: #28a745;
+}
+
+.agent-action-button.decline {
+    background-color: #dc3545;
+}
+
+.agent-action-button.finished {
+    background-color: #ffc107;
+}
+
+.agent-action-button:hover {
+    background-color: #0056b3;
+}
+
+/* Map Container */
+#agent-map {
+    height: 200px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .agent-order-images {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .agent-order-image {
+        max-width: 100%;
+    }
+}
+
+
+/* Admin Header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.admin-header .logo-container img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* Admin Dashboard Container */
+.admin-dashboard-container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard-container h1,
+.admin-dashboard-container h2 {
+    color: #333;
+}
+
+.admin-dashboard-container h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.admin-dashboard-container h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+/* Admin User Management */
+.admin-user-management {
+    overflow-x: auto;
+}
+
+.admin-user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.admin-user-table th,
+.admin-user-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-user-table th {
+    background-color: #f4f4f4;
+}
+
+.admin-user-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.admin-action-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.admin-action-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+    }
+    
+    .admin-dashboard-container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+
+/* Edit User Container */
+.edit-user-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 150px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.edit-user-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* Edit User Form */
+.edit-user-form {
+    text-align: left;
+}
+
+.edit-user-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.edit-user-form input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.edit-user-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.edit-user-button:hover {
+    background-color: #0056b3;
+}
+
+/* Back to Dashboard Link */
+.back-to-dashboard {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-to-dashboard:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .edit-user-container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo-container img {
+    max-height: 50px;
+    width: auto;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+
+
+
+/* Upload Container Styles */
+.upload-container {
+    max-width: 1000px;
+    margin: 120px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.upload-container form {
+    margin-bottom: 40px;
+}
+
+.upload-container form div {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.upload-container input[type="text"],
+.upload-container input[type="number"],
+.upload-container input[type="file"] {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    width: 100%;
+}
+
+.upload-container button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.upload-container button:hover {
+    background-color: #0056b3;
+}
+
+.image-preview {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.image-container {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 360px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.map-container {
+    margin-top: 30px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+#map {
+    height: 240px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+#location-form {
+    display: none;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.location-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.location-info p span {
+    font-weight: bold;
+}
+
+.confirm-button {
+    display: block;
+    margin-top: 15px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    text-align: center;
+}
+
+.confirm-button:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .image-preview {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-container {
+        width: 100%;
+    }
+
+    #map {
+        height: 200px;
+    }
+}
+
+/* Home Container Styles */
+.home-container {
+    max-width: 1200px;
+    margin: 150px auto 20px auto; /* Centered with margin adjusted for header */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.home-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 36px;
+}
+
+.home-container p {
+    margin-bottom: 30px;
+    color: #555;
+    font-size: 18px;
+}
+
+.home-container a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.home-container a:hover {
+    background-color: #0056b3;
+}
+
+/* Services Section Styles */
+.services-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.services-section article {
+    max-width: 300px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.services-section h3 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+}
+
+.services-section p {
+    color: #555;
+    font-size: 16px;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}
+
+
+/* Detailed Analysis Container */
+.analysis-container {
+    max-width: 800px;
+    margin: 120px auto 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.analysis-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.analysis-container p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Image Display */
+.image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Damage Details Section */
+.details-container {
+    text-align: left;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+}
+
+.details-container p {
+    margin: 10px 0;
+}

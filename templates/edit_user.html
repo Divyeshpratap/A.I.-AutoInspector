@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="edit-user-container">
+        <h1>Edit User</h1>
+        <form action="{{ url_for('edit_user', user_id=user.id) }}" method="POST" class="edit-user-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+            <label for="password">Password (leave blank to keep the same):</label>
+            <input type="password" id="password" name="password">
+
+            <button type="submit" class="edit-user-button">Update User</button>
+        </form>
+        <a href="{{ url_for('admin_dashboard') }}" class="back-to-dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Damage Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .analysis-container {
+            max-width: 800px;
+            margin: 120px auto 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .analysis-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .analysis-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-container {
+            text-align: left;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .details-container p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="analysis-container">
+        <h1>Detailed Damage Analysis</h1>
+        <p>Total Repair Cost: ${{ repair_cost }}</p>
+        <div class="image-container">
+            <img src="data:image/png;base64,{{ image_base64 }}" alt="Damage Analysis Visualization">
+        </div>
+        <div class="details-container">
+            <p><strong>Damage Description:</strong> {{ damage_description }}</p>
+            <p><strong>Estimated Time for Repair:</strong> {{ repair_time }} hours</p>
+            <!-- Add more details as needed -->
+        </div>
+    </div>
+</body>
+</html>

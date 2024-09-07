@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - A.I.: Automobile Inspector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="login-container">
+        <h1>Automobile Inspector Login</h1>
+        <form action="{{ url_for('login') }}" method="POST">
+            <label for="username">Username <span class="required">*</span></label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password <span class="required">*</span></label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+            </div>
+
+            <label for="role">Login as <span class="required">*</span></label>
+            <select id="role" name="role" required>
+                <option value="user">Customer</option>
+                <option value="agent">Service Agent</option>
+                <option value="admin">Administrator</option>
+            </select>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>If you don't have an account, <a href="{{ url_for('register') }}">Register here</a>.</p>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleIcon.textContent = type === 'password' ? '👁️' : '🙈';
+        }
+    </script>
+</body>
+</html>

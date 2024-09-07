@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        #map {
+            height: 300px;
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places"></script>
+    <script>
+		function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            document.getElementById('latitude-display').textContent = lat;
+            document.getElementById('longitude-display').textContent = lng;
+            initMap(lat, lng);
+            reverseGeocode(lat, lng);
+        }
+
+        function showError(error) {
+            alert("Error in getting location: " + error.message);
+        }
+
+        function initMap() {
+            var lat = {{ agent.latitude if agent.latitude else '51.505' }};
+            var lng = {{ agent.longitude if agent.longitude else '-0.09' }};
+            var location = {lat: lat, lng: lng};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: true
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function() {
+                var position = marker.getPosition();
+                document.getElementById('latitude').value = position.lat();
+                document.getElementById('longitude').value = position.lng();
+            });
+        }
+    </script>
+</head>
+<body onload="initMap()">
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="A.I. Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('agent_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="agent-profile-container">
+        <h1>Update Your Profile</h1>
+        <div class="horizontal-containers">
+            <!-- Profile Update Form -->
+            <form action="{{ url_for('update_agent_profile') }}" method="post" class="profile-form">
+                <div>
+                    <label for="phone_number">Phone Number <span class="required">*</span></label>
+                    <input type="text" id="phone_number" name="phone_number" value="{{ agent.phone_number if agent.phone_number else '' }}" required>
+                </div>
+                <div>
+                    <label for="service_name">Service Name <span class="required">*</span></label>
+                    <input type="text" id="service_name" name="service_name" value="{{ agent.service_name if agent.service_name else '' }}" required>
+                </div>
+                <div>
+                    <label for="address">Address <span class="required">*</span></label>
+                    <input type="text" id="address" name="address" value="{{ agent.address if agent.address else '' }}" required>
+                </div>
+                <div>
+                    <button type="submit" class="btn-update">Update Profile</button>
+                </div>
+            </form>
+            <!-- Location Update Form -->
+            <form action="{{ url_for('update_agent_location') }}" method="post" class="location-form">
+                <div>
+                    <label for="latitude">Latitude <span class="required">*</span></label>
+                    <input type="text" id="latitude" name="latitude" value="{{ agent.latitude if agent.latitude else '' }}" required>
+                </div>
+                <div>
+                    <label for="longitude">Longitude <span class="required">*</span></label>
+                    <input type="text" id="longitude" name="longitude" value="{{ agent.longitude if agent.longitude else '' }}" required>
+                </div>
+				<div id="map"></div>
+                <div>
+                    <button type="submit" class="btn-update">Update Location</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</body>
+</html>
