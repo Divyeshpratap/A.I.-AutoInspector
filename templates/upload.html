@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Damage Detection Pipeline</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=REDACTED&libraries=places"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places"></script>
     <style>
         /* Additional styling specific to this page */
         .upload-container {

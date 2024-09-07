@@ -14,7 +14,7 @@
             border: 1px solid #ddd;
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=REDACTED"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places"></script>
     <script>
         function initMap() {
             var location = {lat: {{ order.latitude }}, lng: {{ order.longitude }}};
