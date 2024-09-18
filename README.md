@@ -70,6 +70,7 @@ The Automobile Inspector system is composed of several key components, each serv
 
 ### 5. Database and File Management:
 **SQLite Database:** User data, including account details, session information, and inference results, are stored in an SQLite database. The database is managed using SQLAlchemy, providing a robust and scalable solution for data persistence.
+
 **Static Files:** Images, processed documents, and inference results are managed in structured directories, ensuring easy access and retrieval.
 
 ### 6. Error Handling and Logging:
