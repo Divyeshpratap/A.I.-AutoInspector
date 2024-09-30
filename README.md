@@ -62,7 +62,8 @@ The Automobile Inspector system is composed of several key components, each serv
 
 ### 4. LLM ChatBot:
 - **RAG-Based Information Retrieval:** The CarBot component employs a Retrieval-Augmented Generation (RAG) pipeline to handle user queries about their vehicles by processing car manuals or related web content. It uses **LangChain for document processing**, where car manuals are parsed and segmented using the Recursive Character TextSplitter. Web content is similarly processed through an UnstructuredURLLoader. The segmented text is embedded using OpenAI or Ollama embeddings, depending on the model selected, and **indexed with FAISS** (Facebook AI Similarity Search) to facilitate efficient retrieval. The prompt is carfully designed to return an answer only if it is present in the provided document, otherwise it lets the user know that the answer is not present in the uploaded documents.
-  - **Query Processing:** When a user submits a query, the system first **rephrases it within the context of the chat history** using LLama 3.1/ GPT 4-o-mini. The rephrased question is then matched against the indexed content, and relevant segments are retrieved. These segments are fed into a language model to generate a precise, context-aware answer.
+  
+**Query Processing:** When a user submits a query, the system first **rephrases it within the context of the chat history** using LLama 3.1/ GPT 4-o-mini. The rephrased question is then matched against the indexed content, and relevant segments are retrieved. These segments are fed into a language model to generate a precise, context-aware answer.
 
 <div align="center">
    <img src="https://github.com/user-attachments/assets/76985443-ee97-4b38-a247-7dc15d3fdf73" alt="RAG pipeline" width="75%">
@@ -92,6 +93,7 @@ To set up the project, follow these steps:
 
 3. Execute the script using the following command:
    ```bash
+   python create_admin.py [--username <admin_username>] [--email <admin_email>] [--password <admin_password>]
    python app.py
 
 ## Directory
@@ -99,24 +101,70 @@ To set up the project, follow these steps:
 ```
 ${ROOT}/
 │
-├── carDDModel/                 # damage inferencing model and associated weights
-│    ├── dcn_plus_cfg_small.py  # Configuration file for the DCN model
-│    └── checkpoint.pth         # Checkpoint weights for the DCN model
+├── carDDModel/                 # Damage inferencing model and associated weights
+│   ├── dcn_plus_cfg_small.py    # Configuration file for the DCN model
+│   └── checkpoint.pth           # Checkpoint weights for the DCN model
 │
 ├── instance/                   # SQLite database
+│   └── site.db
 │
-├── templates/                  # HTML templates
+├── models/                     # Python modules for database, CV, NLP
+│   ├── database.py             # Database models and setup
+│   ├── cv/                     # Computer Vision models
+│   │   └── cv_model.py         # CV model implementations
+│   │
+│   ├── nlp/                    # Natural Language Processing models
+│   │   └── nlp_model.py        # NLP model implementations
+│   │
+│   └── __pycache__/            # Python cache files (excluded from README)
 │
-├── static/                     # static assets like CSS files
+├── static/                     # Static assets for the web app
+│   ├── css/                    # CSS files
+│   │   └── style.css
+│   ├── images/                 # Image files
+│   │   ├── inferenceSample.png
+│   │   ├── logo.png
+│   │   ├── RAG_Flow.png
+│   │   └── visualDamagePipeline.png
+│   ├── js/                     # JavaScript files
+│   │   └── script.js
+│   └── results/                # Result images or data
 │
-├── uploads/                    # chatbot-related uploaded files
+├── templates/                  # HTML templates for Flask
+│   ├── add_agent.html
+│   ├── admin_dashboard.html
+│   ├── admin_login_dontknow.html
+│   ├── agent_dashboard.html
+│   ├── agent_profile.html
+│   ├── base.html
+│   ├── chatbot_index.html
+│   ├── detailed_analysis.html
+│   ├── edit_user.html
+│   ├── index.html
+│   ├── login.html
+│   ├── order_details.html
+│   ├── register.html
+│   ├── upload.html
+│   ├── user_dashboard.html
+│   ├── user_order_details.html
+│   └── user_profile.html
 │
-├── app.py                      # Main Python script
+├── uploads/                    # Uploaded files for chatbot and other features
 │
-├── README.md                   # Project documentation file
+├── utils/                      # Utility modules and scripts
+│   ├── context_processor.py
+│   ├── data_helpers.py
+│   ├── filters.py
+│   ├── geolocation.py
+│   ├── helpers.py
+│   ├── sqlalchemy_events.py
+│   └── web_scraper.py
 │
-├── requirements.txt            # Python dependencies file
-│
+├── app.py                      # Main Flask application script
+├── create_admin.py             # Script to create admin account
+├── LICENSE                     # Project license
+├── README.md                   # Project documentation
+├── requirements.txt            # Python dependencies
 └── setup.sh                    # Script to set up the environment
 
 ```
