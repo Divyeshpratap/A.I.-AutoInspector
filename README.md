@@ -94,16 +94,14 @@ To set up the project, follow these steps:
 3. Set up your environment variable:
 
 Sample .env file
-# .env
+   ```bash
 
-# Flask Configuration
-FLASK_SECRET_KEY='your_flask_secret_key'
-
-# API Keys
-GoogleMaps_API_KEY='your_google_maps_api_key'
-GoogleSearch_API_KEY='your_google_search_api_key'
-GoogleSearch_engine_id='your_google_search_engine_id'
-OPENAI_API_KEY='your_openai_api_key'
+   FLASK_SECRET_KEY='your_flask_secret_key'
+   
+   GoogleMaps_API_KEY='your_google_maps_api_key'
+   GoogleSearch_API_KEY='your_google_search_api_key'
+   GoogleSearch_engine_id='your_google_search_engine_id'
+   OPENAI_API_KEY='your_openai_api_key'
 
 5. Execute the script using the following command:
    ```bash
