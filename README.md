@@ -91,15 +91,14 @@ To set up the project, follow these steps:
    chmod +x setup.sh
    ./setup.sh
 
-3. Set up your environment variable:
-
-Sample .env file
+3. Set up your environment variable (.env file):
    ```bash
    FLASK_SECRET_KEY='your_flask_secret_key'
    GoogleMaps_API_KEY='your_google_maps_api_key'
    GoogleSearch_API_KEY='your_google_search_api_key'
    GoogleSearch_engine_id='your_google_search_engine_id'
    OPENAI_API_KEY='your_openai_api_key'
+
 
 4. Execute the script using the following command:
    ```bash
