@@ -30,6 +30,12 @@ https://github.com/user-attachments/assets/846b8083-fc78-45d4-9aee-14719e440734
 
 *Visual Damage Detection Demonstration*
 
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/846b8083-fc78-45d4-9aee-14719e440734.mp4" controls width="75%">
+    Your browser does not support the video tag.
+  </video>
+  <p><i>Visual Damage Detection Demonstration</i></p>
+</div>
 
    
 ## Description
