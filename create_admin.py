@@ -1,6 +1,11 @@
 import argparse
 from app import app, db, User
 from werkzeug.security import generate_password_hash
+import os
+
+if not os.path.exists('instance'):
+    os.makedirs('instance')
+    print("Created 'instance' directory.")
 
 def create_admin(username, email, password):
     with app.app_context():
