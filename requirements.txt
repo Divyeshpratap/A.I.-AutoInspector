@@ -15,3 +15,5 @@ transformers==4.44.2
 opencv-python==4.10.0.84
 matplotlib==3.7.5
 yapf==0.40.1
+python-dotenv
+beautifulsoup4

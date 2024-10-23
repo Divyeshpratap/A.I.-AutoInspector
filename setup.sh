@@ -15,19 +15,12 @@ pip install yapf==0.40.1
 pip install -r requirements.txt
 
 # Step 4: Install and configure Ollama for Ubuntu/Linux
-# Download the Ollama binary
-curl -LO https://ollama.com/download/ollama-linux.tar.gz
-
-# Extract the binary
-tar -xzf ollama-linux.tar.gz
-
-# Move the binary to a directory in your PATH
-sudo mv ollama /usr/local/bin/
-
-# Make sure the binary is executable
-sudo chmod +x /usr/local/bin/ollama
+# Download and install the Ollama binary
+curl -fsSL https://ollama.com/install.sh | sh
 
 # Confirm installation
 ollama --version
+
+source carDDEnv/bin/activate
 
 echo "Setup complete. You can now run your application with 'flask run'."
