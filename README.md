@@ -25,6 +25,15 @@ Automobile Inspector is an advanced AI-powered application designed to automate 
 6. [Result](#result)
 7. [Acknowledgment](#acknowledgment)
 8. [Contact](#Contact)
+
+
+<div align="center">
+   <a href="https://github.com/user-attachments/assets/4335f495-8e67-440b-8a31-c1c80906656b.mp4">
+      <img src="https://github.com/user-attachments/assets/4335f495-8e67-440b-8a31-c1c80906656b" alt="Video Demonstration" width="75%">
+   </a>
+   <p><i>Visual Damage Detection Demonstration</i></p>
+</div>
+
    
 ## Description
 The system offers two core functionalities:
