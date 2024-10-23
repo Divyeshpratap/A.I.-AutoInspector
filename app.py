@@ -117,6 +117,11 @@ def send_status(message):
 # Route Definitions
 # --------------------
 
+if not os.path.exists('static/results'):
+    os.makedirs('static/results')
+    print("Created 'results' directory.")
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
